@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: retell-jambonz-app
+    env: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "node app.js"

@@ -1,37 +1,83 @@
 {
-  "/retell": {
-    "pstnCarrier": {
-      "description": "Name of the Carrier you created for your SIP provider.",
-      "type": "string",
-      "required": true
-    },
-    "retellCarrier": {
-      "description": "Name of the Carrier you created for Retell.",
-      "type": "string",
-      "required": true
-    },
-    "sipUsername": {
-      "description": "Username of the SIP client you created to authenticate with Retell.",
-      "type": "string",
-      "required": true
-    },
-    "sipPassword": {
-      "description": "Password of the SIP client you created to authenticate with Retell.",
-      "type": "string",
-      "obscure": true,
-      "required": true
-    },
-    "countryCode": {
-      "description": "Provide your local telephony country code if your PSTN carrier delivers calls in national number format, otherwise leave empty.",
-      "type": "string"
-    },
-    "overrideCallerId": {
-      "description": "Provide a caller ID number if you want all outbound calls from Retell to have a specified caller ID that is different than the calling number received from Retell.",
-      "type": "string"
-    },
-    "overrideDialedNumber": {
-      "description": "When sending calls to Retell, replace the incoming dialed number with this value.  This is useful if you are receiving calls from a PBX extension but need to send a proper E.164 number to Retell.",
-      "type": "string"
-    }
+  "name": "retell-app",
+  "description": "An application that can connect Retell AI agents to jambonz",
+  "version": "0.0.1",
+  "homepage": "https://www.jambonz.org",
+  "license": "MIT",
+  "keywords": [
+    "jambonz",
+    "retell",
+    "voice",
+    "app"
+  ],
+  "author": {
+    "name": "Dave Horton",
+    "email": "daveh@jambonz.org"
+  },
+  "scripts": {
+    "start": "node app",
+    "test": "NODE_ENV=test HTTP_PORT=3001 ./node_modules/.bin/jest --testNamePattern",
+    "coverage": "npm test -- --coverage"
+  },
+  "dependencies": {
+    "@jambonz/node-client-ws": "^0.6.1",
+    "debug": "^4.3.4",
+    "express": "^4.18.2",
+    "pino": "^8.15.1",
+    "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "jest": "^29.6.4",
+    "supertest": "^6.3.3"
+  },
+  "jambonz": {
+    "verbs": [
+      {
+        "verb": "config",
+        "label": "configure settings",
+        "description": "provide values for the following application-specific environment variables",
+        "options": [
+          {
+            "name": "pstnCarrier",
+            "type": "string",
+            "description": "the name of the carrier that you use to connect to the PSTN"
+          },
+          {
+            "name": "retellCarrier",
+            "type": "string",
+            "description": "the name of the carrier that you have created for Retell"
+          },
+          {
+            "name": "sipUsername",
+            "type": "string",
+            "description": "the sip username that you have created for Retell to send calls to jambonz"
+          },
+          {
+            "name": "sipPassword",
+            "type": "string",
+            "description": "the sip password that you have created for Retell to send calls to jambonz"
+          },
+          {
+            "name": "countryCode",
+            "type": "string",
+            "optional": true,
+            "description": "the default country code to apply to non-e164 numbers"
+          },
+          {
+            "name": "overrideCallerId",
+            "type": "string",
+            "optional": true,
+            "description": "the caller id to use for outbound calls from Retell"
+          },
+          {
+            "name": "callerIdCarousel",
+            "type": "string",
+            "optional": true,
+            "description": "A comma-separated list of caller IDs to rotate through for outbound calls from Retell"
+          }
+        ]
+      }
+    ]
   }
 }
