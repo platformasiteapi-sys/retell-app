@@ -9,7 +9,8 @@ const opts = Object.assign({
   level: process.env.LOGLEVEL || 'info'
 });
 const logger = require('pino')(opts);
-const port = process.env.HTTP_PORT || 3000;
+// Use PORT provided by Render, fallback to 3000 for local dev
+const port = process.env.PORT || 3000;
 
 // Set up app locals
 app.locals = {
